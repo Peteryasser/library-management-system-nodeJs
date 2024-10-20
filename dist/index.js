@@ -6,28 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
 const data_source_1 = require("./data-source");
-const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
-const bookRoutes_1 = __importDefault(require("./routes/bookRoutes"));
-const borrowRoutes_1 = __importDefault(require("./routes/borrowRoutes"));
+const user_routes_1 = __importDefault(require("./modules/user/user.routes"));
+const book_routes_1 = __importDefault(require("./modules/book/book.routes"));
 const dotenv_1 = __importDefault(require("dotenv"));
-// Load environment variables
+const errorHandler_1 = require("./middlewares/errorHandler");
 dotenv_1.default.config();
-// Initialize the express app
 const app = (0, express_1.default)();
-// Middleware to parse incoming JSON
 app.use(express_1.default.json());
-// Setup routes
-app.use('/api/users', userRoutes_1.default);
-app.use('/api/books', bookRoutes_1.default);
-app.use('/api/borrows', borrowRoutes_1.default);
-// Initialize the database
+app.use('/api', user_routes_1.default);
+app.use('/api/books', book_routes_1.default);
+//app.use('/api/borrows', borrowRoutes);
+// Centralized Error Handling Middleware
+app.use(errorHandler_1.errorHandler);
 data_source_1.AppDataSource.initialize()
     .then(() => {
     console.log('Data Source has been initialized');
-    app.listen(process.env.PORT, () => {
-        console.log('Server is running on port ' + process.env.PORT);
+    app.listen(3000, () => {
+        console.log('Server is running on port 3000');
     });
 })
     .catch((err) => {
     console.error('Error during Data Source initialization', err);
 });
+module.exports = app;
