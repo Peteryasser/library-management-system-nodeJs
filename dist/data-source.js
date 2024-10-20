@@ -12,8 +12,8 @@ exports.AppDataSource = new typeorm_1.DataSource({
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    entities: [__dirname + '/../**/*.entity.{js,ts}'],
-    migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
+    entities: [__dirname + '/../entities/*.js'],
+    migrations: [__dirname + '/../migrations/*.js'],
     synchronize: false,
     logging: false
 });
