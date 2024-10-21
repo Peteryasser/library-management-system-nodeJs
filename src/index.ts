@@ -6,6 +6,8 @@ import bookRoutes from './modules/book/book.routes';
 
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/errorHandler';
+import borrowRoutes from './modules/borrow/borrow.routes';
+import reportRoutes from './modules/report/report.routes';
 
 dotenv.config();
 
@@ -14,7 +16,9 @@ app.use(express.json());
 
 app.use('/api', userRoutes);
 app.use('/api/books', bookRoutes);
-//app.use('/api/borrows', borrowRoutes);
+app.use('/api/borrows', borrowRoutes);
+app.use('/api/reports', reportRoutes);
+
 
 // Centralized Error Handling Middleware
 app.use(errorHandler);
